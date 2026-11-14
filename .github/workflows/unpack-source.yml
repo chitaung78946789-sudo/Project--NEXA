@@ -10,10 +10,11 @@ permissions:
 jobs:
   unpack:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.GH_PAT }}
 
       - name: Extract NEXA source
         run: |

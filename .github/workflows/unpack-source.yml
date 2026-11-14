@@ -1,0 +1,30 @@
+
+name: Unpack NEXA Source
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ github.token }}
+
+      - name: Extract NEXA source
+        run: |
+          unzip -q Project_NEXA_Android_Source_v3.zip -d /tmp/nexa
+          cp -a /tmp/nexa/Project-NEXA/. .
+          rm Project_NEXA_Android_Source_v3.zip
+
+      - name: Save source files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Add NEXA Android source"
+          git push
